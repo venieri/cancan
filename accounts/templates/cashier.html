@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+
+
+{% block content %}
+<div class="columns is-mobile is-centered">
+  <div class="column is-full has-text-centered">
+      <h1 class="has-text-warning">Your Account</h1>
+  </div>
+</div>
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-two-fifths">
+        <ul>
+			<li> <A HREF="{% url 'buy' %}" >Buy Some Chips...</A></li>
+            <li><A HREF="{% url 'transactions' %}" >Check Your Transactions...</A></li>
+         </ul>
+        {{ xmessages }} <br>
+      <table   class="table is-bordered has-background-grey-darker" >
+          <thead>
+            <tr><th colspan="4" class="has-text-warning">{{request.user}}</th></tr>
+            <tr ><th class="has-text-warning">Bankroll</th><th class="has-text-warning">Bid</th><th class="has-text-warning">Won</th><th class="has-text-warning"x>Rank</th></tr>
+            </thead>
+          <tbody>
+            <tr class="has-text-warning"><td>{{user.account.bankroll}}</td><td>{{user.account.bids}}</td><td>{{user.account.won}}</td><td>{{user.account.rank}}</td></tr>
+          </tbody>
+        </table>
+  </div>
+    <div class="column is-two-fifths has-text-centered">
+      <IMG BORDER=0  SRC="/static/images/cashier.gif" hspace = 10 align=left BORDER="0" ALT="The Cashier">
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block navigation %}
+
+{% endblock %}

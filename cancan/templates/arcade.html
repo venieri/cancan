@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+<div class="level">
+  <div class="level-item has-text-centered has-text-warning">
+    <div>
+      <p class="title has-text-warning">Joining Can Can  - the casino where you always win !</p>
+		<h2>Rules &amp; Regulations</h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-half">
+
+		<IMG SRC="/static/images/arcade.gif"  BORDER="0"  ALT="The Arcade at Lydia's Casino "
+	usemap="#arcade" ISMAP></a>
+<MAP NAME="arcade">
+<AREA SHAPE="RECT" COORDS="440,160,632,326" HREF="{% url 'jackpot' %}" ALT="Jackpot">
+<AREA SHAPE="RECT" COORDS="150,130,441,271" HREF="{% url 'videopoker' %}" ALT="Video Poker">
+</MAP>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block navigation %}
+{% endblock %}

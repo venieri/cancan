@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-full has-text-centered">
+ <table   class="table is-bordered has-background-grey-darker" >
+          <thead>
+            <tr><th colspan="4" class="has-text-warning">{{request.user}}</th></tr>
+            <tr ><th class="has-text-warning">Bankroll</th><th class="has-text-warning">Bid</th><th class="has-text-warning">Won</th><th class="has-text-warning"x>Rank</th></tr>
+            </thead>
+          <tbody>
+            <tr class="has-text-warning"><td>{{user.account.bankroll}}</td><td>{{user.account.bids}}</td><td>{{user.account.won}}</td><td>{{user.account.rank}}</td></tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-full has-text-centered">
+<form action="." method="post">{% csrf_token %}
+{{ form.as_table }}
+<input type="submit" value="Buy" />
+</form>
+{% endblock %}
+  </div>
+</div>
+
+{% block navigation %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% load casino_tags %}
+
+<!DOCTYPE html>
+<html class="has-background-black ">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Can Can Casino</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+{% block analytics %}
+	{%include "analytics.html" %}
+{% endblock %}
+</head>
+<body>
+
+
+
+{% block header %}
+
+<nav class="navbar is-black" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io">
+       <p class="title" style="color:pink;">CAN CAN - The casino where you always win !</p>
+    </a>
+  </div>
+
+
+
+    <div class="navbar-end ">
+      <div class="navbar-item">
+        {{ user.username }}
+      </div>
+    </div>
+  </div>
+</nav>
+
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block navigation %}
+	<div style="position:relative; left:400px;" class="push_3 grid_6   ui-widget-content">
+<A HREF="{% url 'games' %}" >games</a>
+<A HREF="{% url 'pit' %}" >pit</a>
+<A HREF="{% url 'arcade' %}" >arcade</a>
+<A HREF="{% url 'cashier' %}" >cashier</a>
+<A HREF="{% url 'manager' %}" >manager</a>
+<A HREF="{% url 'exit' %}" >exit</a>
+</div>
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+<div class="level">
+  <div class="level-item has-text-centered has-text-warning">
+    <div>
+      <p class="title has-text-warning">Joining Can Can  - the casino where you always win !</p>
+		<h2>Rules &amp; Regulations</h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-half">
+		<ol>
+			<li>This notice and series of games are copyright and all rights are reserved.</li>
+			<li>For all other purposes, nothing here is real.</li>
+			<li>No liability is created and none intended.</li>
+			<li>Everything is by way of example.</li>
+			<li>All transactions are fictional.</li>
+			<li>Anyone playing around with the rules, gets busted down to zero.</li>
+			<li>Anyone fooling around with the code, gets sent to Siberia.</li>
+			<li>No money is being won or lost.</li>
+			<li>A prize may be awarded to the twenty highest scoring players each month, based on half the notional income from banner ads, whenever such arrives, but nobody should count on it.</li>
+			<li>Further rules will be posted whenever it makes sense to do so.</li>
+			<li>Life is otherwise six-to-five against.</li>
+
+		</ol>
+	</div>
+</div>
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-half">
+	<div class="field is-grouped">
+	  <div class="control">
+		<a href="{% url 'join' %}"><button class="button is-link" > Yes I agree to these terms and conditions</button></a>
+	  </div>
+	  <div class="control">
+		  <a href="{% url 'sign_in' %}"><button class="button is-link is-light" >No Way !</button></a>
+	  </div>
+	</div>
+	</div>
+</div>
+
+
+
+
+{% endblock %}
+{% block navigation %} {% endblock %}

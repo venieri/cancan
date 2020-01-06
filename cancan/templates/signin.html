@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-full has-text-centered">
+<img src="/static/images/stars.gif" alt="stars">
+  </div>
+</div>
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-one-quater has-text-centered">
+<img src="/static/images/leftcol.gif" alt="left column">
+  </div>
+	 <div class="column is-two-quaters has-text-centered">
+
+<H1> The Pot Stands at {{pot}} $US !</H1>
+	<form action="." method="post">{% csrf_token %}
+		{{ form.as_p }}
+		<p>I have read the casino <a href="{% url 'rules'}">rules and regulations</a></p>
+		<p><input type="submit" name='signin' value="I accept them" /></p>
+		<p><input type="submit" name='pissoff' value="NO Way!" /></p>
+		<p><input type="hidden" name='next' value="/mainhall/" /></p>
+	</form>
+
+  </div>
+	 <div class="column is-one-quater has-text-centered">
+<img src="/static/images/rightcol.gif" alt="right column">
+  </div>
+</div>
+
+{% endblock %}

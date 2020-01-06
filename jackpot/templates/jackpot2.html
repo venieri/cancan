@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+
+
+{% block on_start %}
+  $('select').addClass("ui-widget ui-corner-all");
+  $('item').addClass("ui-corner-all ui-widget-content");
+{% endblock %}
+
+{% block title %}
+The Jackpot of Can Can  - the casino where you always win !
+{% endblock %}
+
+{% block header %}
+<div class="prefix_3 grid_6  ui-widget-content"><h2>The Jackpot of Can Can</h2></div>
+{% endblock %}
+{% block content %}
+<form action="." method="post">{% csrf_token %}
+	<div style="position: relative; background:url(/{{ STATIC_URL }}/{{ IMAGES }}/jackpot1.gif); width: 592px; height: 463px;"> 
+<input style="position:absolute; left:467px; top:196px;" type="image" border="0"  name="spin"  src="/static/images/jackpot-spin.png">
+
+        <div style="position: absolute; top:80px;  left: 200px;  width: 180px; height: 60px;" align="center"><blink>{{ message }}</blink></div>
+        
+        <div style="position: absolute; top:120px;  left: 210px;  width: 60px; height: 60px;"><img src="/static/images/{{left_wheel.top}}t.jpg"></div>
+		<div style="position: absolute; top:120px;  left: 270px;  width: 60px; height: 60px;"><img src="/static/images/{{middle_wheel.top}}t.jpg"></div>
+		<div style="position: absolute; top:120px;  left: 330px;  width: 60px; height: 60px;"><img src="/static/images/{{right_wheel.top}}t.jpg"></div>
+		<div style="position: absolute; top:152px;  left: 210px;  width: 60px; height: 60px;"><img src="/static/images/{{left_wheel.mid}}c.jpg"></div>
+		<div style="position: absolute; top:152px;  left: 270px;  width: 60px; height: 60px;"><img src="/static/images/{{middle_wheel.mid}}c.jpg"></div>
+		<div style="position: absolute; top:152px;  left: 330px;  width: 60px; height: 60px;"><img src="/static/images/{{right_wheel.mid}}c.jpg"></div>
+		<div style="position: absolute; top:214px;  left: 210px;  width: 60px; height: 60px;"><img src="/static/images/{{left_wheel.bottom}}b.jpg"></div>
+		<div style="position: absolute; top:214px;  left: 270px;  width: 60px; height: 60px;"><img src="/static/images/{{middle_wheel.bottom}}b.jpg"></div>
+		<div style="position: absolute; top:214px;  left: 330px;  width: 60px; height: 60px;"><img src="/static/images/{{right_wheel.bottom}}b.jpg"></div>
+      	  <div style="position: absolute; top: 125px; left: 460px;  padding: 0px; background-color: #000; font-weight: bold; font-size: 11px;"> 
+			{%if account.bankroll %} {{ form.bid }}  {% else %} <a href="{% url 'buy' %}" class="ui-widget-content" >chips?</a> {%endif %}
+        </div>	 
+      <div style="position: absolute; top:260px;  left: 215px;  width: 180px; height: 60px;" align="center">Your Bankroll is {{account.bankroll}}</div>
+        </div>
+</form>
+
+{% endblock %}
+
+
+{% block navigation %}
+<div class="prefix_3 grid_6  ui-widget-content" ><p>
+<A HREF="{% url 'games' %}" >games</a>
+<A HREF="{% url 'pit' %}" >pit</a>
+<A HREF="{% url 'mainhall' %}" >mainhall</a>
+<A HREF="{% url 'cashier' %}" >cashier</a>
+<A HREF="{% url 'manager' %}" >manager</a>
+<A HREF="{% url 'exit' %}" >exit</a>  
+	</p>
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}{% endblock %}
+{% block header %}
+<nav class="level">
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="title">Joining Can Can  - the casino where you always win !</p>
+    </div>
+  </div>
+</nav>
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-half">
+
+      <form action="{% url 'join' %}" method="post">{% csrf_token %}
+{{ form.non_field_errors }}
+	{% for hidden in form.hidden_fields %}
+	{{ hidden }}
+	{% endfor %}
+
+
+
+
+<div class="field">
+  <label class="label"  for="{{ form.username.id_for_label }}">Username</label>
+  <p class="control has-icons-left has-icons-right">
+    <input class="input is-success" type="text" placeholder="User name" value="" name="username" id="id_username">
+    <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+  </p>
+  <p class="help">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+  <!-- <p class="help is-success">This username is available</p> -->
+    <p class=" help is_danger">{{ form.username.errors }}</p>
+</div>
+<div class="field">
+      <label class="label" for="{{ form.password1.id_for_label }}">Password</label>
+  <p class="control has-icons-left">
+    <input class="input" type="password" placeholder="Password" name="password1" id="id_password1">
+    <span class="icon is-small is-left">
+      <i class="fas fa-lock"></i>
+    </span>
+  </p>
+     <p class="help">Your password can’t be too similar to your other personal information. Your password must contain at least 8 characters. Your password can’t be a commonly used password. Your password can’t be entirely numeric. </p>
+  <p class=" help is_danger">{{ form.password1.errors }}</p>
+</div>
+<div class="field">
+    <label class="label" for="{{ form.password2.id_for_label }}">Confrim Password</label>
+  <p class="control has-icons-left">
+    <input class="input" type="password" placeholder="Confrim Password" name="password2" id="id_password2">
+    <span class="icon is-small is-left">
+      <i class="fas fa-lock"></i>
+    </span>
+
+  </p>
+            <p class=" help is_danger">{{ form.password2.errors }}</p>
+</div>
+
+
+<div class="field">
+  <div class="control">
+    <label class="checkbox" for="{{ form.agreed_to_rules.id_for_label }}">
+      <input type="checkbox" name="agreed_to_rules" id="id_agreed_to_rules">
+      I agree to the <a href="#">terms and conditions</a>
+
+    </label>
+  </div>
+     <p class=" help is_danger">{{ form.agreed_to_rules.errors }}</p>
+</div>
+
+<div class="field">
+  <label class="label"  for="{{ form.email.id_for_label }}">Email</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input" type="email" placeholder="Email" id="id_email" name="email">
+    <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+
+  </div>
+          <p class=" help is_danger">{{ form.email.errors }}</p>
+</div>
+
+
+<div class="field">
+  <label class="label"   for="{{ form.wallet.id_for_label }}">Wallet Address</label>
+  <div class="control">
+    <textarea class="textarea" placeholder="Wallet Address" name="wallet" id="wallet_id"></textarea>
+        <p class="help">This is where we will send you your dosh. You can add this later. </p>
+
+
+  </div>
+        <p class=" help is_danger">{{ form.wallet.errors }}</p>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link">Join</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light">Cancel</button>
+  </div>
+</div>
+
+</form>
+
+</div>
+</div>
+{% endblock %}
+
+{% block navigation %} {% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+The Jackpot of Can Can  - the casino where you always win !
+{% endblock %};'
+
+
+{% block header %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-three-fifths has-text-centered"><h2>The Video Poker of Can Can</h2></div>
+</div>
+
+
+{{ account.bankroll }}
+{% endblock %}
+
+{% block content %}
+
+<form action="." method="post">{% csrf_token %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-three-fifths has-text-centered"><h5 align="center" style="color:pink">{{message|safe}}</h5></div>
+</div>
+<div class="columns is-mobile is-centered has-text-warning">
+	{%for card in hand %}
+  <div class="column has-text-centered">
+	  {% if card.open  %}
+ 			<img  height="205"  src="/static/images/{{ card.ordinal }}.jpg" ><br />
+	  {% else %}
+	  		<img  height="205"  src="/static/images/0.jpg" ><br />
+	  {% endif %}
+		{% if current_state == "delt" %}
+			<center><input type="checkbox" name="holdcard-{{forloop.counter0}}"></center>
+		{% endif %}
+ </div>
+
+ {%endfor %}
+		<div class="column has-text-centered">
+
+			<input type="submit"  class="button" id="action"  type="submit" border="0"  name="deal"  value="{{action}}">
+			<br />
+			{%if current_state != "delt" and  account.bankroll > 0%}
+			   {{ form.bid }}
+			{% else %}
+				<input type="hidden" name="bid" value="{{bid}}">{{bid}}
+			{% endif %}
+	</div>
+</div>
+
+
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-three-fifths has-text-centered">
+
+{{message|safe}}
+  </div>
+</div>
+
+
+
+
+
+     
+</form>
+
+{% endblock %}
+
+{% block navigation %}
+{% include "navbar.html" with links="cashier,mainhall,manager,exit" %}
+{% endblock %}

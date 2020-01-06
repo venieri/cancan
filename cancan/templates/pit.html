@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+<div class="level">
+  <div class="level-item has-text-centered has-text-warning">
+    <div>
+      <p class="title has-text-warning">Joining Can Can  - the casino where you always win !</p>
+		<h2>Rules &amp; Regulations</h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-half">
+
+	<IMG SRC="/static/images/pit.gif"  style="width:591px; height:471px;"  ALT="The Pit at Lydia's Casino"
+	usemap="#pitmap" ISMAP></a>
+	<MAP NAME="pitmap">
+<AREA SHAPE="RECT" COORDS="161,266,94,103" HREF="{% url 'roulette' %}" ALT="Roullete">
+<AREA SHAPE="RECT" COORDS="384,274,473,363" HREF="{% url 'baccarra' %}" ALT="Baccarra">
+<AREA SHAPE="RECT" COORDS="292,215,377,299" HREF="{% url 'bjack' %}" ALT="Blackjack">
+<AREA SHAPE="RECT" COORDS="230,208,284,267" HREF="{% url 'bjack' %}" ALT="Blackjack">
+<AREA SHAPE="RECT" COORDS="380,190,492,252" HREF="{% url 'craps' %}" ALT="Craps">
+
+</MAP>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block navigation %}
+{% endblock %}

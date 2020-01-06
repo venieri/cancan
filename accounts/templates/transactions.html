@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="columns is-mobile is-centered">
+  <div class="column is-full has-text-centered">
+      <h1 class="has-text-warning">Your Transactions</h1>
+<div class="table-container">
+      <table   class="table is-bordered table is-fullwidth has-background-grey-darker" >
+          <thead>
+            <tr><th colspan="4" class="has-text-white">{{request.user}}</th></tr>
+            <tr ><th class="has-text-warning">Timestamp</th><th class="has-text-warning">Description</th><th class="has-text-warning">Amount</th><th class="has-text-warning">Bankroll</th></tr>
+            </thead>
+          <tbody>
+          {% for line in object_list %}
+            <tr class="has-text-warning"><td>{{line.timestamp}}</td><td>{{line.entry_type}}</td><td>{{line.amount}}</td><td>{{line.bankroll}}</td></tr>
+          {% empty %}
+   <tr class="has-text-warning" rowspan="4"><td>No articles yet.</td>
+          {% endfor %}
+          </tbody>
+        </table>
+</div>
+
+<nav class="pagination is-rounded has-text-white" role="navigation" aria-label="pagination">
+    {% if page_obj.has_previous %}
+    <a class="pagination-previous has-text-white"  href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% else %}
+    <a class="pagination-previous has-text-white" disabled >Previous</a>
+    {% endif %}
+
+     {% if page_obj.has_next %}
+    <a class="pagination-next has-text-white is-right" href="?page={{ page_obj.next_page_number }}" >Next page</a>
+    {% else %}
+    <a class="pagination-next has-text-white is-right" disabled>Next page</a>
+    {% endif %}
+</nav>
+
+
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block navigation %}
+
+{% endblock %}

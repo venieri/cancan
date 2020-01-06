@@ -1,0 +1,432 @@
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Can Can  - the casino where you always win !</title>
+
+<link rel="stylesheet" href="/static/css/reset.css" />
+<link rel="stylesheet" href="/static/css/text.css" />
+<link rel="stylesheet" href="/static/css/960.css" />
+
+
+<link type="text/css" href="/static/css/pink-cass/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-1.8.16.custom-s.min.js"></script>
+
+<script type="text/javascript" src="/static/js/json2-min.js"></script>
+
+
+ <style type="text/css">
+
+
+.room {background: #000000; border-style:none; border-width:0px;} 
+.green-bid1 {font-family:Arial, Helvetica, sans-serif; font-size:12px; background:gray; width:45px; height: 45px; color:pink}
+.green-bid {font-family:Arial, Helvetica, sans-serif; font-size:12px; background:#005500; width:45px; height: 45px; color:pink}
+.black-bid1 {font-family:Arial, Helvetica, sans-serif; font-size:14px; background:gray; width:45px; height: 45px;color:pink}
+.black-bid {font-family:Arial, Helvetica, sans-serif; font-size:14px; background:black; width:45px; height: 45px;color:pink}
+.Black {font-family:Arial, Helvetica, sans-serif; font-size:14px; background:black; width:45px; height: 45px;color:pink}
+.red-bid1 {font-family:Arial, Helvetica, sans-serif; font-size:14px; background:white;  width:45px; height: 45px;  color:pink}
+.red-bid {font-family:Arial, Helvetica, sans-serif; font-size:14px; background:#CC0000;  width:45px; height: 45px;  color:pink}
+.Red {font-family:Arial, Helvetica, sans-serif; font-size:14px; background:#CC0000;  width:45px; height: 45px;  color:pink}
+
+</style>
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript">
+	$(function(){
+		$('input:submit').button();
+		
+
+	function make_pile(target, chips) {
+		chips.each(function(index) {
+			$(this).position({
+				of: target,
+				my: "center center",
+				at: "center center",
+				offset: ""+ Math.floor( Math.random() * 15 ) +" "+(17+Math.floor( Math.random() * 15 ))
+			});
+		});
+	}
+
+function step(ind, stop, worker, delay) {
+	if (ind <= stop) {
+		setTimeout(function(){
+			worker(ind, stop);
+			step(ind + 1, stop, worker, delay);
+		}, delay);	
+	}
+}
+
+
+  
+ 
+	function get_bids_list() {
+		var bids =[];
+		$('.bid').each(function(index, element) {
+			var bid = $(element);
+	   		var offset = bid.offset();
+			bids.push({
+				bid: bid.attr('id'),
+				top: offset.top,
+				left: offset.left,
+				bottom: offset.top+bid.height(),
+				right: offset.left+bid.width()
+			});
+	 	});
+	 	return bids;
+	}
+	
+	
+	function chips_on_bids() {
+		var chips =[];
+		$('.chip').each(function(index, element) {
+			var chip = $(element);
+			var chip_to_save = {
+				value: parseInt(chip.attr("value")),
+				top: parseInt(chip.css('top')),
+				left: parseInt(chip.css('left')),
+				bids:[]
+			};
+			$.each(bids, function(index, bid) {
+				if  (chip.css('left') !='auto' && intersects(chip, bid)) {
+					chip_to_save.bids.push(bid.bid);
+				}
+			});
+    		chips.push(chip_to_save);
+		});
+		return chips;
+	}
+	
+  
+
+
+function intersects(a, b) {
+  var a_left = parseInt(a.css('left')); 
+  var a_top =  parseInt(a.css('top'));
+  var a_bottom = a.height() + a_top;
+  var a_right = a.width() + a_left;
+   return ! ( b.left > a_right
+        || b.right < a_left
+        || b.top > a_bottom
+        || b.bottom < a_top
+        );
+  }
+  
+ function collect() {
+	$('.LOST').animate({
+	'visibility':'none',
+    opacity: .01,
+    left: '10px',
+	top: '10px'
+  }, 2000);
+ $('.LOST').removeClass('chip');
+ }
+ 
+ 
+function pay() {
+	$.each(payout, function(index, pay) {
+		var chip = $("#"+pay.id);
+		chip.animate({
+			opacity: .9,
+			left: pay.left + 'px',
+			top: pay.top + 'px'
+		  }, 2000);
+	});
+}
+
+function spin() {	
+	$('#call_colour').html("Rien Va");
+	$('#call_ball').html("Plus");
+	step(10,20, function(num, stop) {
+	$('#spin').attr('src', '/static/images//hwheel'+num+'.gif');
+		if (num == stop) {
+			$('#spin').attr('src', '/static/images/hwheel00.gif');
+			$('#call_colour').html("");
+			$('#call_ball').html("");
+			collect();
+			pay();
+		}
+	}, 100);
+}
+
+
+	var payout = [];
+	var bids = get_bids_list();
+	$('td').addClass("ui-widget-content");
+	$('.chip').draggable();
+	$('#spin').click(function() {
+	 	var chips = chips_on_bids();
+		$('input[name=chips]').val(JSON.stringify(chips));
+		//alert(JSON.stringify(chips));
+	});
+	make_pile($("#1000s"), $(".start.value1000"));
+	make_pile($("#500s"), $(".start.value500"));
+	make_pile($("#100s"), $(".start.value100"));
+	make_pile($("#50s"), $(".start.value50"));
+	make_pile($("#20s"), $(".start.value20"));
+	make_pile($("#10s"), $(".start.value10"));
+	
+	spin();
+
+			
+	});
+</script>
+
+	<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-4932729-9']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+</head>
+<body bgcolor="#000000" color="pink">
+
+
+
+<div class="container_12">
+
+	<div style="margin:auto;width:70%;">
+	
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9709516298734812";
+/* cancan-1 */
+google_ad_slot = "3594452989";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+	</div>
+
+
+
+
+
+
+
+
+<form action="." method="post"><input type="hidden" name="csrfmiddlewaretoken" value="TdBseWqtCki5aTtGOUIbcjpHHxPvMTXv81Ye9O7Z60IMXKwYQtnGQckZy3F62BLa">
+<input type="hidden" name="chips" />
+
+
+<table  border="0"  class="room" cellpadding="0"  cellspacing="3">
+	<tr class="room" >
+    	<td class="room" width="120">
+        	<h2 align="center"  ><span id="call_colour">Place your</span> <br><span id="call_ball">Bets</span></h2></font>
+        	
+    	</td>
+        <td class="room"  height=160 colspan=1><img align='left' width="740" src="/static/images/attable00.gif" BORDER=0></td>
+	</tr>
+
+	
+	<tr class="room" >
+    	<td class="room" ><input type="image" border=0 id="spin" name="spin" width="80" height="150"  alt="wheel" src="/static/images/hwheel00.gif"> <br/><br/><br/>
+Your bankroll<br/>
+	
+	</td>
+    	<td class="room" >
+    	<table border="0" bgcolor="black" cellpadding="0"  cellspacing="0" >
+    		<tr><td>
+    			<table class="table" border="0" bgcolor="#440000" cellspacing="3" >
+        			<tr align="center" >
+ 			           <td  class="green-bid bid"  class="green-bid" height=40 width=40>&nbsp;</td>
+			            <td class="green-bid bid" id="1to3"   >1 - 3</td>
+			            <td class="green-bid bid" id="4to6"   >4 - 6</td>
+			            <td class="green-bid bid" id="7to9"   >7 - 9</td>
+			            <td class="green-bid bid" id="10to12" >10 - 12</td>
+			            <td class="green-bid bid" id="13to15" >13 - 15</td>
+			            <td class="green-bid bid" id="16to18" >16 - 18</td>
+			            <td class="green-bid bid" id="19to21" >19 - 21</td>
+			            <td class="green-bid bid" id="22to24" >22 - 24</td>
+			            <td class="green-bid bid" id="25to27" >25 - 27</td>
+			            <td class="green-bid bid" id="28to30" >28 - 30</td>
+			            <td class="green-bid bid" id="31to33" >31 - 33</td>
+			            <td class="green-bid bid" id="34to36" >34 - 36</td>
+			            <td class="green-bid bid" >&nbsp;</td>
+				      </tr>
+				      <tr align="center" >
+ 				           <td  rowspan= 3 class="green-bid bid"  >0</td>
+				            <td id="3" class='Red bid' >3</td>
+				            <td id="6"  class='Black' bid >6</td>
+				            <td id="9"  class='Red bid'  >9</td>
+				            <td id="12" class='Black bid'  >12</td>
+				            <td id="15" class='Red bid'  >15</td>
+				            <td id="18" class='Black bid'  >18</td>
+				            <td id="21" class='Red bid'  >21</td>
+				            <td id="24" class='Black bid'  >24</td>
+				            <td id="27" class='Red bid'  >27</td>
+				            <td id="30" class='Black bid'  >30</td>
+				            <td id="33" class='Red bid'   >33</td>
+				            <td id="36" class='Black bid'  >36</td>
+				            <td id="3to36" class="green-bid bid"  >3 to 36</td>
+				        </tr>
+				        <tr align="center" >
+				            <td id="2" class='Black 1to18 even 1to3 2to35 1doz bid'   >2</td>
+				            <td id="5" class='Red 1to18 odd 4to6 2to35 1doz bid'  >5</td>
+				            <td id="8" class='Black 1to18 even 7to9 2to35 1doz bid'   >8</td>
+				            <td id="11" class='Red bid'   >11</td>
+				            <td id="14" class='Black bid'   >14</td>
+				            <td id="17" class='Red bid'   >17</td>
+				            <td id="20" class='Black bid'   >20</td>
+				            <td id="23" class='Red bid'   >23</td>
+				            <td id="26" class='Black bid'   >26</td>
+				            <td id="29" class='Red bid'   >29</td>
+				            <td id="32" class='Black bid'   >32</td>
+				            <td id="35" class='Red bid'   >35</td>
+				            <td id="2to35" class="green-bid bid"  >2 to 35</td>
+				        </tr>
+ 				       <tr align="center" >
+				            <td id="1" class='Red 1to18 odd 1to3 1to34 1doz bid'   >1</td>
+				            <td id="4" class='Black bid'   >4</td>
+				            <td id="7" class='Red bid'   >7</td>
+				            <td id="10" class='Black bid'   >10</td>
+				            <td id="13" class='Red bid'   >13</td>
+				            <td id="16" class='Black bid'   >16</td>
+				            <td id="19" class='Red bid'   >19</td>
+				            <td id="22" class='Black bid'   >22</td>
+				            <td id="25" class='Red bid'   >25</td>
+				            <td id="28" class='Black bid'   >28</td>
+				            <td id="31" class='Red bid'   >31</td>
+				            <td id="34" class='Black bid'   >34</td>
+				            <td id="1to34" class="green-bid bid"  >1 to 34</td>
+				        </tr>
+ 				       <tr align="center" height=25> 
+				            <td  class="green-bid"  >&nbsp;</td>
+				            <td id="1doz" colspan=4 class="green-bid bid" > 1st Dozen</td>
+				            <td id="2doz" colspan=4 class="green-bid bid" > 2nd Dozen</td>
+				            <td id="3doz" colspan=4 class="green-bid bid" > 3rd Dozen</td>
+				            <td class="green-bid"  >&nbsp;</td>
+				            </tr>
+				        <tr align="center" > 
+				            <td class="green-bid" >&nbsp;</td>
+				            <td id="1to18" class="green-bid bid"  colspan=2> 1 to 18</td>
+				            <td id="even" colspan=2 class="green-bid bid" >Even</td>
+				            <td id="Red"  class="Red bid"  colspan=2 ><span>Red</td>
+				            <td id="Black"  class="Black bid"  colspan=2 >Black</td>
+				            <td id="odd"colspan=2 class="green-bid bid" > Odd</td>
+				            <td id="19to36" colspan=2  class="green-bid bid" 5> 19 to 36</td>
+				            <td class="green-bid" >&nbsp;</td>
+				        </tr>
+				    </table>
+			    </td></tr>
+			</table>
+	 </td></tr>
+<tr class="room"><td class="room"></td><td class="room">
+	
+
+	
+
+
+
+
+
+
+	<img id="chip-0" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-1" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-2" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-3" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-4" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-5" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-6" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-7" class="chip bankroll start value1000" value="1000" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-1000.png">
+
+
+
+	<img id="chip-8" class="chip bankroll start value500" value="500" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-500.png">
+
+
+
+	<img id="chip-9" class="chip bankroll start value500" value="500" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-500.png">
+
+
+
+	<img id="chip-10" class="chip bankroll start value500" value="500" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-500.png">
+
+
+
+	<img id="chip-11" class="chip bankroll start value100" value="100" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-100.png">
+
+
+
+	<img id="chip-12" class="chip bankroll start value100" value="100" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-100.png">
+
+
+
+	<img id="chip-13" class="chip bankroll start value100" value="100" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-100.png">
+
+
+
+	<img id="chip-14" class="chip bankroll start value100" value="100" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-100.png">
+
+
+
+	<img id="chip-15" class="chip bankroll start value50" value="50" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-50.png">
+
+
+
+	<img id="chip-16" class="chip bankroll start value20" value="20" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-20.png">
+
+
+
+	<img id="chip-17" class="chip bankroll start value10" value="10" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-10.png">
+
+
+
+	<img id="chip-18" class="chip bankroll start value10" value="10" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-10.png">
+
+
+
+	<img id="chip-19" class="chip bankroll start value10" value="10" style="position:absolute; left:10px+forloop.counter0; top:200px;"  src="/static/images/chip-10.png">
+
+
+
+</td></tr>
+</table>
+<div >
+<span style="position:relative; left:55px; width:55px" id="1000s"></span><span style="position:relative; left:125px; width:55px" id="500s"></span><span style="position:relative; left:177px; width:55px" id="100s"></span><span style="position:relative; left:235px; width:55px" id="50s"></span><span style="position:relative; left:285px; width:55px" id="20s"></span><span style="position:relative; left:335px; width:55px" id="10s"></span>
+</div>
+
+
+
+
+
+
+</div>
+</body>
+</html>

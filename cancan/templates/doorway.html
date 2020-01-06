@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+
+{% block header %} {% endblock %}
+
+{% block content %}
+<div class="level">
+  <div class="level-item has-text-centered">
+    <div>
+		<p>
+			<a href="{% url 'membership_agreement' %}" ><img height="360" src="/static/images/geni.gif"></a>
+		</p>
+		<p>
+			<a href="{% url 'membership_agreement' %}"  class="has-text-white">Guests</a>
+		</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div class="has-text-white">
+		<p> This months pot is {{ pot }}</p>
+		<p>
+			{% if user.is_authenticated %}
+				{% for member in top10 %}
+					<div><span class="member_name">{{ member.user }}</span> <span class="member_score">{{ member.score }}</span></div>
+				{% endfor %}
+			{%else %}
+				<p>Free To Join</p>
+				<p>Free To Play</p>
+				<p>And it could be yours</p>
+				<p>If you stay</p>
+			{% endif %}
+		</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+		<p>
+			<a href="{% url 'sign_in' %}" ><img  height="360" src="/static/images/membero.gif"></a>
+		</p>
+		<p>
+			<a href="{% url 'sign_in' %}" >Members</a>
+		</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block navigation %} {% endblock %}

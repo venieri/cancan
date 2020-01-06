@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+<div class="level">
+  <div class="level-item has-text-centered has-text-warning">
+    <div>
+      <p class="title has-text-warning">Joining Can Can  - the casino where you always win !</p>
+		<h2>Rules &amp; Regulations</h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="columns is-mobile is-centered has-text-warning">
+  <div class="column is-half">
+
+	<IMG SRC="/static/images	/gamebill.gif"  BORDER="0"  ALT="Lydia's Casino"
+	usemap="#gamemap" ISMAP></a>
+<MAP NAME="gamemap">
+<AREA SHAPE="RECT" COORDS="70,25,371,122" HREF="{% url 'pit' %}" ALT="the pit">
+<AREA SHAPE="RECT" COORDS="74,125,371,169" HREF="{% url 'roulette' %}" ALT="Roulette">
+<AREA SHAPE="RECT" COORDS="112,191,250,35" HREF="{% url 'pit' %}" ALT="Baccarra">
+<AREA SHAPE="RECT" COORDS="146,254,277,324" HREF="{% url 'pit' %}" ALT="Blackjack">
+<AREA SHAPE="RECT" COORDS="109,329,308,390" HREF="{% url 'pit' %}" ALT="Craps">
+<AREA SHAPE="RECT" COORDS="385,126,559,205" HREF="{% url 'arcade' %}" ALT="The Arcade">
+<AREA SHAPE="RECT" COORDS="398,208,554,270" HREF="{% url 'jackpot' %}" ALT="Jackpot">
+<AREA SHAPE="RECT" COORDS="398,276,556,324" HREF="{% url 'videopoker' %}" ALT="Video Poker">
+
+</MAP>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block navigation %}
+{% endblock %}
